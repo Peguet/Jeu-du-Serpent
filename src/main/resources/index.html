@@ -101,65 +101,24 @@
     <!--            </td>-->
     <!--        </tr>-->
         <script>
-            let xGaucheTeteSerpent = 0;
-            <!--    TODO faire un tableau pour snake de cases de 32px de côté, le tableau a 16 lignes et 16 colonnes -->
-            // <g id="lignes-verticales-du-quadrillage">
-            //     <path d="M0,0 L0,512" stroke="yellow" stroke-width="1"/>
-            //     <path d="M32,0 L32,512" stroke="yellow" stroke-width="1"/>
-            //     <path d="M64,0 L64,512" stroke="yellow" stroke-width="1"/>
-            //     <path d="M96,0 L96,512" stroke="yellow" stroke-width="1"/>
-            //     <path d="M128,0 L128,512" stroke="yellow" stroke-width="1"/>
-            //     <path d="M165,0 L165,512" stroke="yellow" stroke-width="1"/>
-            //     <path d="M198,0 L198,512" stroke="yellow" stroke-width="1"/>
-            //     <path d="M231,0 L231,512" stroke="yellow" stroke-width="1"/>
-            //     <path d="M264,0 L264,512" stroke="yellow" stroke-width="1"/>
-            //     <path d="M297,0 L297,512" stroke="yellow" stroke-width="1"/>
-            //
-            //     <path d="M330,0 L330,512" stroke="yellow" stroke-width="1"/>
-            //     <path d="M363,0 L363,512" stroke="yellow" stroke-width="1"/>
-            //     <path d="M396,0 L396,512" stroke="yellow" stroke-width="1"/>
-            //     <path d="M429,0 L429,512" stroke="yellow" stroke-width="1"/>
-            //     <path d="M462,0 L462,512" stroke="yellow" stroke-width="1"/>
-            //     <path d="M495,0 L495,512" stroke="yellow" stroke-width="1"/>
-            //     <path d="M528,0 L528,512" stroke="yellow" stroke-width="1"/>
-            //     <path d="M543,0 L543,512" stroke="yellow" stroke-width="1"/>
-            // </g>
-            // <g id="lignes-horizontales-du-quadrillage">
-            //     <path d="M0,0 L512,0" stroke="yellow" stroke-width="1"/>
-            //     <path d="M0,32 L512,32" stroke="yellow" stroke-width="1"/>
-            //     <path d="M0,64 L512,64" stroke="yellow" stroke-width="1"/>
-            //     <path d="M0,96 L512,96" stroke="yellow" stroke-width="1"/>
-            //     <path d="M0,132 L512,132" stroke="yellow" stroke-width="1"/>
-            //     <path d="M0,165 L512,165" stroke="yellow" stroke-width="1"/>
-            //     <path d="M0,198 L512,198" stroke="yellow" stroke-width="1"/>
-            //     <path d="M0,231 L512,231" stroke="yellow" stroke-width="1"/>
-            //     <path d="M0,264 L512,264" stroke="yellow" stroke-width="1"/>
-            //     <path d="M0,297 L512,297" stroke="yellow" stroke-width="1"/>
-            //     <path d="M0,330 L512,330" stroke="yellow" stroke-width="1"/>
-            //     <path d="M0,363 L512,363" stroke="yellow" stroke-width="1"/>
-            //     <path d="M0,396 L512,396" stroke="yellow" stroke-width="1"/>
-            //     <path d="M0,429 L512,429" stroke="yellow" stroke-width="1"/>
-            //     <path d="M0,462 L512,462" stroke="yellow" stroke-width="1"/>
-            //     <path d="M0,495 L512,495" stroke="yellow" stroke-width="1"/>
-            //     <path d="M0,528 L512,528" stroke="yellow" stroke-width="1"/>
-            //     <path d="M0,543 L512,543" stroke="yellow" stroke-width="1"/>
-            // </g>
-
             const svg = document.getElementById("tableau-du-jeu");
 
             const gCellulesTableauDuJeu = document.createElementNS("http://www.w3.org/2000/svg", "g");
             gCellulesTableauDuJeu.setAttribute("id", "cellules-tableau-du-jeu");
             gCellulesTableauDuJeu.setAttribute("fill", "white");
             svg.appendChild(gCellulesTableauDuJeu);
-            let contenuCellulesTableauDuJeu = "";
             for (let ligneActuelle = 0; ligneActuelle < 16; ligneActuelle++) {
                 for (let colonneActuelle = 0; colonneActuelle < 16; colonneActuelle++) {
                     let x = 32*ligneActuelle;
                     let y = 32*colonneActuelle;
-                    contenuCellulesTableauDuJeu += "<rect x=\"" + x + "\" y=\"" + y + "\" width=\"32\" height=\"32\"/>";
+                    const rectCellule = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                    rectCellule.setAttribute("x",x );
+                    rectCellule.setAttribute("y",y );
+                    rectCellule.setAttribute("width","32");
+                    rectCellule.setAttribute("height","32");
+                    gCellulesTableauDuJeu.appendChild(rectCellule);
                 }
             }
-            document.getElementById("cellules-tableau-du-jeu").innerHTML = contenuCellulesTableauDuJeu;
 
             const gCorpsDuSerpent = document.createElementNS("http://www.w3.org/2000/svg", "g");
             gCorpsDuSerpent.setAttribute("id", "corps-du-serpent");
@@ -235,6 +194,49 @@
             gTeteDuSerpent.appendChild(langueDuSerpent);
             // <!--            <g id="tete-du-serpent" transform="rotate(90, 48, 16)">-->
 
+            <!--    TODO faire un tableau pour snake de cases de 32px de côté, le tableau a 16 lignes et 16 colonnes -->
+            // <g id="lignes-verticales-du-quadrillage">
+            //     <path d="M0,0 L0,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M32,0 L32,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M64,0 L64,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M96,0 L96,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M128,0 L128,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M165,0 L165,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M198,0 L198,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M231,0 L231,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M264,0 L264,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M297,0 L297,512" stroke="yellow" stroke-width="1"/>
+            //
+            //     <path d="M330,0 L330,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M363,0 L363,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M396,0 L396,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M429,0 L429,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M462,0 L462,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M495,0 L495,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M528,0 L528,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M543,0 L543,512" stroke="yellow" stroke-width="1"/>
+            // </g>
+            // <g id="lignes-horizontales-du-quadrillage">
+            //     <path d="M0,0 L512,0" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,32 L512,32" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,64 L512,64" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,96 L512,96" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,132 L512,132" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,165 L512,165" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,198 L512,198" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,231 L512,231" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,264 L512,264" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,297 L512,297" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,330 L512,330" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,363 L512,363" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,396 L512,396" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,429 L512,429" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,462 L512,462" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,495 L512,495" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,528 L512,528" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,543 L512,543" stroke="yellow" stroke-width="1"/>
+            // </g>
+            let xGaucheTeteSerpent = 0;
         </script>
         <svg id="dynamic-svg" width="200" height="200" viewBox="0 0 200 200"></svg>
     </body>
