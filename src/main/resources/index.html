@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>Snake</title>
+        <meta charset="UTF-8">
+        <style>
+            html {
+                background-color: #f84cef;
+            }
+            table {
+                width: 100%;
+                margin: 20px 0;
+            }
+            .tableau-du-jeu {
+                border-spacing: 0;
+                margin: 0 0;
+                width: 512px;
+            }
+            .tableau-du-jeu td {
+                alignment: center;
+                border: 1px solid #000000;
+                height: 32px;
+                padding: 0;
+                width: 32px;
+            }
+            svg {
+                align-self: center;
+                display: block;
+                margin: 0;
+                padding: 0
+            }
+            th, td {
+                width: 300px;
+                border: 1px solid #63e0e0;
+                text-align: center;
+                padding: 8px;
+            }
+            th {
+                background-color: #63e0e0;
+                color: #f84cef; /* Change la couleur du texte des en-têtes */
+            }
+        </style>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <th>Joueur 1</th>
+                <th>Joueur 2</th>
+            </tr>
+            <tr>
+                <td>Score
+                    <p id="affichageJoueur1">Valeur actuelle : 0</p>
+                    <button id="incrementerJoueur1">ajouter 1</button>
+                    <button id="decrementerJoueur1">retirer 1</button>
+                </td>
+                <td>Score
+                    <p id="affichageJoueur2">Valeur actuelle : 0</p>
+                    <button id="incrementerJoueur2">ajouter 1</button>
+                    <button id="decrementerJoueur2">retirer 1</button>
+                </td>
+            </tr>
+        </table>
+        <script>
+            let compteurJoueur1 = 0;
+            function incrementerJoueur1() {
+                console.log("Je vais incrémenter Joueur1")
+                compteurJoueur1++;
+                document.getElementById("affichageJoueur1").textContent = "Valeur actuelle : " + compteurJoueur1;
+            }
+
+            function decrementerJoueur1() {
+                console.log("Je vais décrémenter Joueur1")
+                compteurJoueur1--;
+                document.getElementById("affichageJoueur1").textContent = "Valeur actuelle : " + compteurJoueur1;
+            }
+
+            document.getElementById("incrementerJoueur1").onclick = incrementerJoueur1;
+            document.getElementById("decrementerJoueur1").onclick = decrementerJoueur1;
+
+
+            let compteurJoueur2 = 0;
+            function incrementerJoueur2() {
+                console.log("Je vais incrémenter Joueur2");
+                compteurJoueur2++;
+                document.getElementById("affichageJoueur2").textContent = "Valeur actuelle : " + compteurJoueur2;
+            }
+
+            function decrementerJoueur2() {
+                console.log("Je vais décrémenter Joueur2");
+                compteurJoueur2--;
+                document.getElementById("affichageJoueur2").textContent = "Valeur actuelle : " + compteurJoueur2;
+            }
+
+            document.getElementById("incrementerJoueur2").onclick = incrementerJoueur2;
+            document.getElementById("decrementerJoueur2").onclick = decrementerJoueur2;
+        </script>
+        <svg id="tableau-du-jeu" width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"/>
+    <!--    <table class="tableau-du-jeu">-->
+    <!--        <tr>-->
+    <!--            <td>-->
+    <!--            </td>-->
+    <!--        </tr>-->
+        <script>
+            let xGaucheTeteSerpent = 0;
+            <!--    TODO faire un tableau pour snake de cases de 32px de côté, le tableau a 16 lignes et 16 colonnes -->
+            // <g id="lignes-verticales-du-quadrillage">
+            //     <path d="M0,0 L0,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M32,0 L32,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M64,0 L64,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M96,0 L96,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M128,0 L128,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M165,0 L165,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M198,0 L198,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M231,0 L231,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M264,0 L264,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M297,0 L297,512" stroke="yellow" stroke-width="1"/>
+            //
+            //     <path d="M330,0 L330,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M363,0 L363,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M396,0 L396,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M429,0 L429,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M462,0 L462,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M495,0 L495,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M528,0 L528,512" stroke="yellow" stroke-width="1"/>
+            //     <path d="M543,0 L543,512" stroke="yellow" stroke-width="1"/>
+            // </g>
+            // <g id="lignes-horizontales-du-quadrillage">
+            //     <path d="M0,0 L512,0" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,32 L512,32" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,64 L512,64" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,96 L512,96" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,132 L512,132" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,165 L512,165" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,198 L512,198" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,231 L512,231" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,264 L512,264" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,297 L512,297" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,330 L512,330" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,363 L512,363" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,396 L512,396" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,429 L512,429" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,462 L512,462" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,495 L512,495" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,528 L512,528" stroke="yellow" stroke-width="1"/>
+            //     <path d="M0,543 L512,543" stroke="yellow" stroke-width="1"/>
+            // </g>
+
+            const svg = document.getElementById("tableau-du-jeu");
+
+            const gCellulesTableauDuJeu = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            gCellulesTableauDuJeu.setAttribute("id", "cellules-tableau-du-jeu");
+            gCellulesTableauDuJeu.setAttribute("fill", "white");
+            svg.appendChild(gCellulesTableauDuJeu);
+            let contenuCellulesTableauDuJeu = "";
+            for (let ligneActuelle = 0; ligneActuelle < 16; ligneActuelle++) {
+                for (let colonneActuelle = 0; colonneActuelle < 16; colonneActuelle++) {
+                    let x = 32*ligneActuelle;
+                    let y = 32*colonneActuelle;
+                    contenuCellulesTableauDuJeu += "<rect x=\"" + x + "\" y=\"" + y + "\" width=\"32\" height=\"32\"/>";
+                }
+            }
+            document.getElementById("cellules-tableau-du-jeu").innerHTML = contenuCellulesTableauDuJeu;
+
+            const gCorpsDuSerpent = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            gCorpsDuSerpent.setAttribute("id", "corps-du-serpent");
+            const rectCorpsDuSerpent = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            rectCorpsDuSerpent.setAttribute("x","0");
+            rectCorpsDuSerpent.setAttribute("y","0");
+            rectCorpsDuSerpent.setAttribute("width","32");
+            rectCorpsDuSerpent.setAttribute("height","32");
+            rectCorpsDuSerpent.setAttribute("fill","green");
+            gCorpsDuSerpent.appendChild(rectCorpsDuSerpent);
+            svg.appendChild(gCorpsDuSerpent);
+
+            const gTeteDuSerpent = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            gTeteDuSerpent.setAttribute("id", "tete-du-serpent");
+            svg.appendChild(gTeteDuSerpent);
+
+            const rect1TeteDuSerpent = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            rect1TeteDuSerpent.setAttribute("x","32");
+            rect1TeteDuSerpent.setAttribute("y","0");
+            rect1TeteDuSerpent.setAttribute("width","32");
+            rect1TeteDuSerpent.setAttribute("height","32");
+            rect1TeteDuSerpent.setAttribute("fill","white");
+            gTeteDuSerpent.appendChild(rect1TeteDuSerpent);
+
+            const circleTeteDuSerpent = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            circleTeteDuSerpent.setAttribute("cx","40");
+            circleTeteDuSerpent.setAttribute("cy","16");
+            circleTeteDuSerpent.setAttribute("r","16");
+            circleTeteDuSerpent.setAttribute("fill","green");
+            gTeteDuSerpent.appendChild(circleTeteDuSerpent);
+
+            const rect2TeteDuSerpent = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            rect2TeteDuSerpent.setAttribute("x","32");
+            rect2TeteDuSerpent.setAttribute("y","0");
+            rect2TeteDuSerpent.setAttribute("width","8");
+            rect2TeteDuSerpent.setAttribute("height","32");
+            rect2TeteDuSerpent.setAttribute("fill","green");
+            gTeteDuSerpent.appendChild(rect2TeteDuSerpent);
+
+            // <!--            <g id="tete-du-serpent" transform="rotate(90, 48, 16)">-->
+            //     <circle cx="40" cy="8" r="3" fill="white"/>
+            //     <circle cx="40" cy="8" r="2" fill="black"/>
+            //     <circle cx="40" cy="24" r="3" fill="white"/>
+            //     <circle cx="40" cy="24" r="2" fill="black"/>
+            //     <!-- la langue du serpent -->
+            //     <path d="M63 19 L61 17 L63 15 M61 17 L51 17" stroke="red" stroke-width="1.5" fill="none"/>
+        </script>
+        <svg id="dynamic-svg" width="200" height="200" viewBox="0 0 200 200"></svg>
+
+<!--        <script>-->
+<!--            // Create a circle element-->
+<!--            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");-->
+<!--            circle.setAttribute("cx", "100");-->
+<!--            circle.setAttribute("cy", "100");-->
+<!--            circle.setAttribute("r", "50");-->
+<!--            circle.setAttribute("fill", "blue");-->
+
+<!--            // Append the circle to the SVG-->
+<!--            svg.appendChild(circle);-->
+<!--        </script>-->
+    </body>
+</html>
+
