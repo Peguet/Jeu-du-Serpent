@@ -199,27 +199,44 @@
             rect2TeteDuSerpent.setAttribute("fill","green");
             gTeteDuSerpent.appendChild(rect2TeteDuSerpent);
 
+            const oeilHautTeteDuSerpent = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            oeilHautTeteDuSerpent.setAttribute("cx","40");
+            oeilHautTeteDuSerpent.setAttribute("cy","8");
+            oeilHautTeteDuSerpent.setAttribute("r","3");
+            oeilHautTeteDuSerpent.setAttribute("fill","white");
+            gTeteDuSerpent.appendChild(oeilHautTeteDuSerpent);
+
+            const pupilleHautTeteDuSerpent = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            pupilleHautTeteDuSerpent.setAttribute("cx","40");
+            pupilleHautTeteDuSerpent.setAttribute("cy","8");
+            pupilleHautTeteDuSerpent.setAttribute("r","2");
+            pupilleHautTeteDuSerpent.setAttribute("fill","black");
+            gTeteDuSerpent.appendChild(pupilleHautTeteDuSerpent);
+
+            const oeilBasTeteDuSerpent = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            oeilBasTeteDuSerpent.setAttribute("cx","40");
+            oeilBasTeteDuSerpent.setAttribute("cy","24");
+            oeilBasTeteDuSerpent.setAttribute("r","3");
+            oeilBasTeteDuSerpent.setAttribute("fill","white");
+            gTeteDuSerpent.appendChild(oeilBasTeteDuSerpent);
+
+            const pupilleBasTeteDuSerpent = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            pupilleBasTeteDuSerpent.setAttribute("cx","40");
+            pupilleBasTeteDuSerpent.setAttribute("cy","24");
+            pupilleBasTeteDuSerpent.setAttribute("r","2");
+            pupilleBasTeteDuSerpent.setAttribute("fill","black");
+            gTeteDuSerpent.appendChild(pupilleBasTeteDuSerpent);
+
+            const langueDuSerpent = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            langueDuSerpent.setAttribute("d","M63 19 L61 17 L63 15 M61 17 L51 17");
+            langueDuSerpent.setAttribute("stroke","red");
+            langueDuSerpent.setAttribute("stroke-width","1.5");
+            langueDuSerpent.setAttribute("fill","none");
+            gTeteDuSerpent.appendChild(langueDuSerpent);
             // <!--            <g id="tete-du-serpent" transform="rotate(90, 48, 16)">-->
-            //     <circle cx="40" cy="8" r="3" fill="white"/>
-            //     <circle cx="40" cy="8" r="2" fill="black"/>
-            //     <circle cx="40" cy="24" r="3" fill="white"/>
-            //     <circle cx="40" cy="24" r="2" fill="black"/>
-            //     <!-- la langue du serpent -->
-            //     <path d="M63 19 L61 17 L63 15 M61 17 L51 17" stroke="red" stroke-width="1.5" fill="none"/>
+
         </script>
         <svg id="dynamic-svg" width="200" height="200" viewBox="0 0 200 200"></svg>
-
-<!--        <script>-->
-<!--            // Create a circle element-->
-<!--            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");-->
-<!--            circle.setAttribute("cx", "100");-->
-<!--            circle.setAttribute("cy", "100");-->
-<!--            circle.setAttribute("r", "50");-->
-<!--            circle.setAttribute("fill", "blue");-->
-
-<!--            // Append the circle to the SVG-->
-<!--            svg.appendChild(circle);-->
-<!--        </script>-->
     </body>
 </html>
 
