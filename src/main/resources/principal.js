@@ -9,16 +9,18 @@ let yGaucheTeteSerpent = 32*6;
 const intervalId = setInterval(() => {
     nombreDintervalles++;
     console.log("nombreDintervalles", nombreDintervalles)
-    if (nombreDintervalles < 3) {
+    let resteDeLaDivision = nombreDintervalles % 12;
+
+    if (resteDeLaDivision < 3) {
         xGaucheTeteSerpent += 32;
     }
-    if (nombreDintervalles >= 3 && nombreDintervalles < 6) {
+    if (resteDeLaDivision >= 3 && resteDeLaDivision < 6) {
         yGaucheTeteSerpent += 32;
     }
-    if (nombreDintervalles >= 6 && nombreDintervalles < 9) {
+    if (resteDeLaDivision >= 6 && resteDeLaDivision < 9) {
         xGaucheTeteSerpent -= 32;
     }
-    if (nombreDintervalles >= 9 && nombreDintervalles < 12) {
+    if (resteDeLaDivision >= 9 && resteDeLaDivision < 12) {
         yGaucheTeteSerpent -= 32;
     }
     // TODO svg : enlever les 3 enfants corps du serpent, tête du serpent et cellules du tableau
@@ -119,26 +121,26 @@ const intervalId = setInterval(() => {
     langueDuSerpent.setAttribute("fill", "none");
     gTeteDuSerpent.appendChild(langueDuSerpent);
 
-    if (nombreDintervalles >= 3 && nombreDintervalles < 6) {
+    if (resteDeLaDivision >= 0 && resteDeLaDivision < 3) {
+        let transformation = "rotate(0, " + (xGaucheTeteSerpent + 16) + ", "
+            + (yGaucheTeteSerpent + 16).toString() + ")";
+        gCorpsDuSerpent.setAttribute("transform", transformation);
+        gTeteDuSerpent.setAttribute("transform", transformation);
+    }
+    if (resteDeLaDivision >= 3 && resteDeLaDivision < 6) {
         let transformation = "rotate(90, " + (xGaucheTeteSerpent + 16) + ", "
             + (yGaucheTeteSerpent + 16).toString() + ")";
         gCorpsDuSerpent.setAttribute("transform", transformation);
         gTeteDuSerpent.setAttribute("transform", transformation);
     }
-    if (nombreDintervalles >= 6 && nombreDintervalles < 9) {
+    if (resteDeLaDivision >= 6 && resteDeLaDivision < 9) {
         let transformation = "rotate(180, " + (xGaucheTeteSerpent + 16) + ", "
             + (yGaucheTeteSerpent + 16).toString() + ")";
         gCorpsDuSerpent.setAttribute("transform", transformation);
         gTeteDuSerpent.setAttribute("transform", transformation);
     }
-    if (nombreDintervalles >= 9 && nombreDintervalles < 12) {
+    if (resteDeLaDivision >= 9 && resteDeLaDivision < 12) {
         let transformation = "rotate(270, " + (xGaucheTeteSerpent + 16) + ", "
-            + (yGaucheTeteSerpent + 16).toString() + ")";
-        gCorpsDuSerpent.setAttribute("transform", transformation);
-        gTeteDuSerpent.setAttribute("transform", transformation);
-    }
-    if (nombreDintervalles >= 12 && nombreDintervalles < 15) {
-        let transformation = "rotate(360, " + (xGaucheTeteSerpent + 16) + ", "
             + (yGaucheTeteSerpent + 16).toString() + ")";
         gCorpsDuSerpent.setAttribute("transform", transformation);
         gTeteDuSerpent.setAttribute("transform", transformation);
@@ -146,5 +148,4 @@ const intervalId = setInterval(() => {
 }, 250); // 1000ms = 1 seconde
 setTimeout(() => {
     clearInterval(intervalId);
-}, 8100);
-
+}, 998100);
