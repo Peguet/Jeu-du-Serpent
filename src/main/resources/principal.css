@@ -1,0 +1,28 @@
+html {
+    background-color: #a7fcdd;
+}
+
+table {
+    width: 100%;
+    margin: 20px 0;
+}
+
+svg {
+    align-self: center;
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #000000;
+}
+
+th, td {
+    width: 300px;
+    border: 1px solid #63e0e0;
+    text-align: center;
+    padding: 8px;
+}
+
+th {
+    background-color: #63e0e0;
+    color: #f84cef; /* Change la couleur du texte des en-têtes */
+}
