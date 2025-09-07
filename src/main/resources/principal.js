@@ -3,16 +3,23 @@ const svg = document.getElementById("tableau-du-jeu");
 const gCellulesTableauDuJeu = document.createElementNS("http://www.w3.org/2000/svg", "g");
 gCellulesTableauDuJeu.setAttribute("id", "cellules-tableau-du-jeu");
 gCellulesTableauDuJeu.setAttribute("fill", "white");
-let nombreDeSecondes = 0;
-let xGaucheTeteSerpent = 0; // 32*6;
-let yGaucheTeteSerpent = 0; // 32*6;
+let nombreDintervalles = 0;
+let xGaucheTeteSerpent = 32*6;
+let yGaucheTeteSerpent = 32*6;
 const intervalId = setInterval(() => {
-    nombreDeSecondes++;
-    console.log("nombreDeSecondes", nombreDeSecondes)
-    if (nombreDeSecondes < 16) {
+    nombreDintervalles++;
+    console.log("nombreDintervalles", nombreDintervalles)
+    if (nombreDintervalles < 3) {
         xGaucheTeteSerpent += 32;
-    } else {
+    }
+    if (nombreDintervalles >= 3 && nombreDintervalles < 6) {
         yGaucheTeteSerpent += 32;
+    }
+    if (nombreDintervalles >= 6 && nombreDintervalles < 9) {
+        xGaucheTeteSerpent -= 32;
+    }
+    if (nombreDintervalles >= 9 && nombreDintervalles < 12) {
+        yGaucheTeteSerpent -= 32;
     }
     // TODO svg : enlever les 3 enfants corps du serpent, tête du serpent et cellules du tableau
     svg.appendChild(gCellulesTableauDuJeu);
@@ -112,40 +119,32 @@ const intervalId = setInterval(() => {
     langueDuSerpent.setAttribute("fill", "none");
     gTeteDuSerpent.appendChild(langueDuSerpent);
 
-    if (nombreDeSecondes >= 16) {
+    if (nombreDintervalles >= 3 && nombreDintervalles < 6) {
         let transformation = "rotate(90, " + (xGaucheTeteSerpent + 16) + ", "
             + (yGaucheTeteSerpent + 16).toString() + ")";
         gCorpsDuSerpent.setAttribute("transform", transformation);
         gTeteDuSerpent.setAttribute("transform", transformation);
     }
-}, 1000); // 1000ms = 1 seconde
+    if (nombreDintervalles >= 6 && nombreDintervalles < 9) {
+        let transformation = "rotate(180, " + (xGaucheTeteSerpent + 16) + ", "
+            + (yGaucheTeteSerpent + 16).toString() + ")";
+        gCorpsDuSerpent.setAttribute("transform", transformation);
+        gTeteDuSerpent.setAttribute("transform", transformation);
+    }
+    if (nombreDintervalles >= 9 && nombreDintervalles < 12) {
+        let transformation = "rotate(270, " + (xGaucheTeteSerpent + 16) + ", "
+            + (yGaucheTeteSerpent + 16).toString() + ")";
+        gCorpsDuSerpent.setAttribute("transform", transformation);
+        gTeteDuSerpent.setAttribute("transform", transformation);
+    }
+    if (nombreDintervalles >= 12 && nombreDintervalles < 15) {
+        let transformation = "rotate(360, " + (xGaucheTeteSerpent + 16) + ", "
+            + (yGaucheTeteSerpent + 16).toString() + ")";
+        gCorpsDuSerpent.setAttribute("transform", transformation);
+        gTeteDuSerpent.setAttribute("transform", transformation);
+    }
+}, 250); // 1000ms = 1 seconde
 setTimeout(() => {
     clearInterval(intervalId);
-}, 30900);
+}, 8100);
 
-
-// const gLignesVerticales = document.createElementNS("http://www.w3.org/2000/svg", "g");
-// gLignesVerticales.setAttribute("id","lignes-verticales-du-quadrillage");
-// svg.appendChild(gLignesVerticales);
-// for (let colonneActuelle = 0; colonneActuelle < 17; colonneActuelle++) {
-//     let x = 32*colonneActuelle;
-//     let texteDuD = "M" + x + ", 0 L" + x + ", 512"
-//     const ligneVerticale = document.createElementNS("http://www.w3.org/2000/svg", "path");
-//     ligneVerticale.setAttribute("d",texteDuD);
-//     ligneVerticale.setAttribute("stroke","black");
-//     ligneVerticale.setAttribute("stroke-width","1");
-//     gLignesVerticales.appendChild(ligneVerticale);
-// }
-//
-// const gLignesHorizontales = document.createElementNS("http://www.w3.org/2000/svg", "g");
-// gLignesHorizontales.setAttribute("id","lignes-horizontales-du-quadrillage");
-// svg.appendChild(gLignesHorizontales);
-// for (let ligneHorizontale = 0; ligneHorizontale < 17; ligneHorizontale++) {
-//     let y = 32*ligneHorizontale;
-//     let texteDuD = "M0, " + y + " L512, " + y
-//     const ligneHorizontalePath = document.createElementNS("http://www.w3.org/2000/svg", "path");
-//     ligneHorizontalePath.setAttribute("d",texteDuD);
-//     ligneHorizontalePath.setAttribute("stroke","black");
-//     ligneHorizontalePath.setAttribute("stroke-width","1");
-//     gLignesHorizontales.appendChild(ligneHorizontalePath);
-// }
