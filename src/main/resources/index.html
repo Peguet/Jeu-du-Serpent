@@ -13,19 +13,12 @@
             margin: 20px 0;
         }
 
-        .tableau-du-jeu td {
-            alignment: center;
-            border: 1px solid #000000;
-            height: 32px;
-            padding: 0;
-            width: 32px;
-        }
-
         svg {
             align-self: center;
             display: block;
             margin: 0;
-            padding: 0
+            padding: 0;
+            border: 1px solid #000000;
         }
 
         th, td {
@@ -49,12 +42,12 @@
     </tr>
     <tr>
         <td>Score
-            <p id="affichageJoueur1">Valeur actuelle : 0</p>
+            <p id="affichageJoueur1">Taille de départ du serpent : 0</p>
             <button id="incrementerJoueur1">Ajouter 1</button>
             <button id="decrementerJoueur1">Retirer 1</button>
         </td>
         <td>Score
-            <p id="affichageJoueur2">Valeur actuelle : 0</p>
+            <p id="affichageJoueur2">Taille de départ du serpent : 0</p>
             <button id="incrementerJoueur2">Ajouter 1</button>
             <button id="decrementerJoueur2">Retirer 1</button>
         </td>
@@ -66,13 +59,13 @@
     function incrementerJoueur1() {
         console.log("Je vais incrémenter Joueur1")
         compteurJoueur1++;
-        document.getElementById("affichageJoueur1").textContent = "Valeur actuelle : " + compteurJoueur1;
+        document.getElementById("affichageJoueur1").textContent = "Taille de départ du serpent : " + compteurJoueur1;
     }
 
     function decrementerJoueur1() {
         console.log("Je vais décrémenter Joueur1")
         compteurJoueur1--;
-        document.getElementById("affichageJoueur1").textContent = "Valeur actuelle : " + compteurJoueur1;
+        document.getElementById("affichageJoueur1").textContent = "Taille de départ du serpent : " + compteurJoueur1;
     }
 
     document.getElementById("incrementerJoueur1").onclick = incrementerJoueur1;
@@ -84,13 +77,13 @@
     function incrementerJoueur2() {
         console.log("Je vais incrémenter Joueur2");
         compteurJoueur2++;
-        document.getElementById("affichageJoueur2").textContent = "Valeur actuelle : " + compteurJoueur2;
+        document.getElementById("affichageJoueur2").textContent = "Taille de départ du serpent : " + compteurJoueur2;
     }
 
     function decrementerJoueur2() {
         console.log("Je vais décrémenter Joueur2");
         compteurJoueur2--;
-        document.getElementById("affichageJoueur2").textContent = "Valeur actuelle : " + compteurJoueur2;
+        document.getElementById("affichageJoueur2").textContent = "Taille de départ du serpent : " + compteurJoueur2;
     }
 
     document.getElementById("incrementerJoueur2").onclick = incrementerJoueur2;
@@ -219,7 +212,7 @@
 
         if (nombreDeSecondes >= 16) {
             let transformation = "rotate(90, " + (xGaucheTeteSerpent + 16) + ", "
-                + (yGaucheTeteSerpent + 19).toString() + ")";
+                + (yGaucheTeteSerpent + 16).toString() + ")";
             gCorpsDuSerpent.setAttribute("transform", transformation);
             gTeteDuSerpent.setAttribute("transform", transformation);
         }
