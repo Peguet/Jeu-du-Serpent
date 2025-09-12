@@ -1,39 +1,58 @@
+const tailleDuCoteDuneCellule = 32;
+const directions = ['E', 'S', 'O', 'N'];
+let indexDirections = 0;
+
 const svg = document.getElementById("tableau-du-jeu");
+document.addEventListener('keydown', (event) => {
+    if ('ArrowLeft' === event.key) {
+        console.log('Je tourne à gauche');
+        if (indexDirections > 0) {
+            indexDirections -= 1;
+        } else {
+            indexDirections = 3;
+        }
+    }
+    if ('ArrowRight' === event.key) {
+        console.log('Je tourne à droite');
+        if (indexDirections < 3) {
+            indexDirections += 1;
+        } else {
+            indexDirections = 0;
+        }
+    }
+});
 
-const gCellulesTableauDuJeu = document.createElementNS("http://www.w3.org/2000/svg", "g");
-gCellulesTableauDuJeu.setAttribute("id", "cellules-tableau-du-jeu");
-gCellulesTableauDuJeu.setAttribute("fill", "white");
-let nombreDintervalles = 0;
-let xGaucheTeteSerpent = 32*6;
-let yGaucheTeteSerpent = 32*6;
+let xGaucheTeteSerpent = tailleDuCoteDuneCellule;
+let yGaucheTeteSerpent = 0;
 const intervalId = setInterval(() => {
-    nombreDintervalles++;
-    console.log("nombreDintervalles", nombreDintervalles)
-    let resteDeLaDivision = nombreDintervalles % 12;
-
-    if (resteDeLaDivision < 3) {
-        xGaucheTeteSerpent += 32;
+    if (indexDirections === 0) {
+        xGaucheTeteSerpent += tailleDuCoteDuneCellule;
     }
-    if (resteDeLaDivision >= 3 && resteDeLaDivision < 6) {
-        yGaucheTeteSerpent += 32;
+    if (indexDirections === 1) {
+        yGaucheTeteSerpent += tailleDuCoteDuneCellule;
     }
-    if (resteDeLaDivision >= 6 && resteDeLaDivision < 9) {
-        xGaucheTeteSerpent -= 32;
+    if (indexDirections === 2) {
+        xGaucheTeteSerpent -= tailleDuCoteDuneCellule;
     }
-    if (resteDeLaDivision >= 9 && resteDeLaDivision < 12) {
-        yGaucheTeteSerpent -= 32;
+    if (indexDirections === 3) {
+        yGaucheTeteSerpent -= tailleDuCoteDuneCellule;
     }
-    // TODO svg : enlever les 3 enfants corps du serpent, tête du serpent et cellules du tableau
+    console.log('xGaucheTeteSerpent: ' + xGaucheTeteSerpent/tailleDuCoteDuneCellule
+        + ' yGaucheTeteSerpent: ' + yGaucheTeteSerpent/tailleDuCoteDuneCellule)
+    const gCellulesTableauDuJeu = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    gCellulesTableauDuJeu.setAttribute("id", "cellules-tableau-du-jeu");
+    gCellulesTableauDuJeu.setAttribute("fill", "white");
+    svg.replaceChildren();
     svg.appendChild(gCellulesTableauDuJeu);
     for (let ligneActuelle = 0; ligneActuelle < 16; ligneActuelle++) {
         for (let colonneActuelle = 0; colonneActuelle < 16; colonneActuelle++) {
-            let x = 32 * ligneActuelle;
-            let y = 32 * colonneActuelle;
+            let x = tailleDuCoteDuneCellule * ligneActuelle;
+            let y = tailleDuCoteDuneCellule * colonneActuelle;
             const rectCellule = document.createElementNS("http://www.w3.org/2000/svg", "rect");
             rectCellule.setAttribute("x", x.toString());
             rectCellule.setAttribute("y", y.toString());
-            rectCellule.setAttribute("width", "32");
-            rectCellule.setAttribute("height", "32");
+            rectCellule.setAttribute("width", tailleDuCoteDuneCellule.toString());
+            rectCellule.setAttribute("height", tailleDuCoteDuneCellule.toString());
             gCellulesTableauDuJeu.appendChild(rectCellule);
         }
     }
@@ -41,10 +60,10 @@ const intervalId = setInterval(() => {
     const gCorpsDuSerpent = document.createElementNS("http://www.w3.org/2000/svg", "g");
     gCorpsDuSerpent.setAttribute("id", "corps-du-serpent");
     const rectCorpsDuSerpent = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    rectCorpsDuSerpent.setAttribute("x", (xGaucheTeteSerpent - 32).toString());
+    rectCorpsDuSerpent.setAttribute("x", (xGaucheTeteSerpent - tailleDuCoteDuneCellule).toString());
     rectCorpsDuSerpent.setAttribute("y", yGaucheTeteSerpent);
-    rectCorpsDuSerpent.setAttribute("width", "32");
-    rectCorpsDuSerpent.setAttribute("height", "32");
+    rectCorpsDuSerpent.setAttribute("width", tailleDuCoteDuneCellule.toString());
+    rectCorpsDuSerpent.setAttribute("height", tailleDuCoteDuneCellule.toString());
     rectCorpsDuSerpent.setAttribute("fill", "green");
     gCorpsDuSerpent.appendChild(rectCorpsDuSerpent);
     svg.appendChild(gCorpsDuSerpent);
@@ -56,8 +75,8 @@ const intervalId = setInterval(() => {
     const rect1TeteDuSerpent = document.createElementNS("http://www.w3.org/2000/svg", "rect");
     rect1TeteDuSerpent.setAttribute("x", xGaucheTeteSerpent.toString());
     rect1TeteDuSerpent.setAttribute("y", yGaucheTeteSerpent);
-    rect1TeteDuSerpent.setAttribute("width", "32");
-    rect1TeteDuSerpent.setAttribute("height", "32");
+    rect1TeteDuSerpent.setAttribute("width", tailleDuCoteDuneCellule.toString());
+    rect1TeteDuSerpent.setAttribute("height", tailleDuCoteDuneCellule.toString());
     rect1TeteDuSerpent.setAttribute("fill", "white");
     gTeteDuSerpent.appendChild(rect1TeteDuSerpent);
 
@@ -72,7 +91,7 @@ const intervalId = setInterval(() => {
     rect2TeteDuSerpent.setAttribute("x", xGaucheTeteSerpent.toString());
     rect2TeteDuSerpent.setAttribute("y", yGaucheTeteSerpent);
     rect2TeteDuSerpent.setAttribute("width", "8");
-    rect2TeteDuSerpent.setAttribute("height", "32");
+    rect2TeteDuSerpent.setAttribute("height", tailleDuCoteDuneCellule.toString());
     rect2TeteDuSerpent.setAttribute("fill", "green");
     gTeteDuSerpent.appendChild(rect2TeteDuSerpent);
 
@@ -121,26 +140,26 @@ const intervalId = setInterval(() => {
     langueDuSerpent.setAttribute("fill", "none");
     gTeteDuSerpent.appendChild(langueDuSerpent);
 
-    if (resteDeLaDivision >= 0 && resteDeLaDivision < 3) {
-        let transformation = "rotate(0, " + (xGaucheTeteSerpent + 16) + ", "
+    if (indexDirections === 0) {
+        let transformation = "rotate(0, " + (xGaucheTeteSerpent + (tailleDuCoteDuneCellule / 2)) + ", "
             + (yGaucheTeteSerpent + 16).toString() + ")";
         gCorpsDuSerpent.setAttribute("transform", transformation);
         gTeteDuSerpent.setAttribute("transform", transformation);
     }
-    if (resteDeLaDivision >= 3 && resteDeLaDivision < 6) {
-        let transformation = "rotate(90, " + (xGaucheTeteSerpent + 16) + ", "
+    if (indexDirections === 1) {
+        let transformation = "rotate(90, " + (xGaucheTeteSerpent + (tailleDuCoteDuneCellule / 2)) + ", "
             + (yGaucheTeteSerpent + 16).toString() + ")";
         gCorpsDuSerpent.setAttribute("transform", transformation);
         gTeteDuSerpent.setAttribute("transform", transformation);
     }
-    if (resteDeLaDivision >= 6 && resteDeLaDivision < 9) {
-        let transformation = "rotate(180, " + (xGaucheTeteSerpent + 16) + ", "
+    if (indexDirections === 2) {
+        let transformation = "rotate(180, " + (xGaucheTeteSerpent + (tailleDuCoteDuneCellule / 2)) + ", "
             + (yGaucheTeteSerpent + 16).toString() + ")";
         gCorpsDuSerpent.setAttribute("transform", transformation);
         gTeteDuSerpent.setAttribute("transform", transformation);
     }
-    if (resteDeLaDivision >= 9 && resteDeLaDivision < 12) {
-        let transformation = "rotate(270, " + (xGaucheTeteSerpent + 16) + ", "
+    if (indexDirections === 3) {
+        let transformation = "rotate(270, " + (xGaucheTeteSerpent + (tailleDuCoteDuneCellule / 2)) + ", "
             + (yGaucheTeteSerpent + 16).toString() + ")";
         gCorpsDuSerpent.setAttribute("transform", transformation);
         gTeteDuSerpent.setAttribute("transform", transformation);
@@ -148,4 +167,4 @@ const intervalId = setInterval(() => {
 }, 250); // 1000ms = 1 seconde
 setTimeout(() => {
     clearInterval(intervalId);
-}, 998100);
+}, 99100);
