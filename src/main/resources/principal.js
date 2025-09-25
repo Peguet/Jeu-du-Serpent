@@ -24,6 +24,10 @@ document.addEventListener('keydown', (event) => {
 
 let xGaucheTeteSerpent = tailleDuCoteDuneCellule;
 let yHautTeteSerpent = 0;
+let xGauchePomme = 128;
+let yHautPomme = 128;
+let pommeEstVisible = true;
+
 const intervalId = setInterval(() => {
     if (indexDirections === 0) {
         xGaucheTeteSerpent += tailleDuCoteDuneCellule;
@@ -45,8 +49,6 @@ const intervalId = setInterval(() => {
     svg.replaceChildren();
     svg.appendChild(gCellulesTableauDuJeu);
 
-    let xGauchePomme = 128;
-    let yHautPomme = 128;
     const gPomme = document.createElementNS("http://www.w3.org/2000/svg", "g");
     gPomme.setAttribute("id", "pomme");
     const rect1Pomme = document.createElementNS("http://www.w3.org/2000/svg", "rect");
@@ -73,7 +75,19 @@ const intervalId = setInterval(() => {
     //     <!-- Tige verte -->
     //     <rect x="15" y="4" width="2" height="7" fill="green"/>
     gPomme.appendChild(rect2Pomme);
+    if (!pommeEstVisible) {
+        gPomme.setAttribute("display", "none");
+    }
+
     svg.appendChild(gPomme);
+
+    if ((xGauchePomme === xGaucheTeteSerpent) && (yHautPomme === yHautTeteSerpent)) {
+        pommeEstVisible = false;
+    }
+
+
+
+
     for (let ligneActuelle = 0; ligneActuelle < 16; ligneActuelle++) {
         for (let colonneActuelle = 0; colonneActuelle < 16; colonneActuelle++) {
             let x = tailleDuCoteDuneCellule * ligneActuelle;
