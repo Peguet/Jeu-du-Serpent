@@ -85,9 +85,6 @@ const intervalId = setInterval(() => {
         pommeEstVisible = false;
     }
 
-
-
-
     for (let ligneActuelle = 0; ligneActuelle < 16; ligneActuelle++) {
         for (let colonneActuelle = 0; colonneActuelle < 16; colonneActuelle++) {
             let x = tailleDuCoteDuneCellule * ligneActuelle;
