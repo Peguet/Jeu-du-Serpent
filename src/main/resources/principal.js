@@ -36,6 +36,7 @@ let pommeEstVisible = true;
 // TODO 6. faire mourir le serpent quand il arrive sur lui-même
 // TODO 7. faire fonctionner le jeu sur téléphone (ne pas réagir aux touches mais aux gestes)
 // TODO 8. passer sur VITE VUE
+// TODO 9. faire que les contrôles passent sur 4 directions
 
 const intervalId = setInterval(() => {
     if (indexDirections === 0) {
