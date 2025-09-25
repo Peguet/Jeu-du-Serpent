@@ -28,6 +28,15 @@ let xGauchePomme = 128;
 let yHautPomme = 128;
 let pommeEstVisible = true;
 
+// TODO 1. faire réapparaître une nouvelle pomme quand la pomme actuelle est mangée
+// TODO 2. faire un tableau des positions des parties du serpent
+// TODO 3. faire grandir le serpent quand il mange une pomme
+// TODO 4. faire mourir le serpent quand il arrive sur un mur
+// TODO 5. faire un bouton pour relancer le jeu quand le serpent est mort
+// TODO 6. faire mourir le serpent quand il arrive sur lui-même
+// TODO 7. faire fonctionner le jeu sur téléphone (ne pas réagir aux touches mais aux gestes)
+// TODO 8. passer sur VITE VUE
+
 const intervalId = setInterval(() => {
     if (indexDirections === 0) {
         xGaucheTeteSerpent += tailleDuCoteDuneCellule;
