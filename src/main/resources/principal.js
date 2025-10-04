@@ -12,8 +12,8 @@ const tailleDuCoteDuneCellule = 32;
 let jeuEstEnCours = false;
 let xGaucheTeteSerpent = tailleDuCoteDuneCellule;
 let yHautTeteSerpent = 0;
-let xGauchePomme = 128;
-let yHautPomme = 128;
+let xGauchePomme = 4;
+let yHautPomme = 4;
 let pommeEstVisible = true;
 
 
@@ -48,8 +48,8 @@ document.addEventListener('keydown', (event) => {
             jeuEstEnCours = true;
             xGaucheTeteSerpent = 0;
             yHautTeteSerpent = 0;
-            xGauchePomme = 128;
-            yHautPomme = 128;
+            xGauchePomme = 4;
+            yHautPomme = 4;
             pommeEstVisible = true;
             indexDirections = 0;
         }
@@ -68,36 +68,34 @@ document.addEventListener('keydown', (event) => {
 const intervalId = setInterval(() => {
     if (jeuEstEnCours) {
         if (indexDirections === 0) {
-            if (xGaucheTeteSerpent < tailleDuCoteDuneCellule * (nombreDeCasesDUnCote-1)) {
-                xGaucheTeteSerpent += tailleDuCoteDuneCellule;
+            if (xGaucheTeteSerpent < (nombreDeCasesDUnCote-1)) {
+                xGaucheTeteSerpent += 1;
             } else {
                 jeuEstEnCours = false;
             }
         }
         if (indexDirections === 1) {
-            if (yHautTeteSerpent < tailleDuCoteDuneCellule * (nombreDeCasesDUnCote-1)) {
-                yHautTeteSerpent += tailleDuCoteDuneCellule;
+            if (yHautTeteSerpent < nombreDeCasesDUnCote-1) {
+                yHautTeteSerpent += 1;
             } else {
                 jeuEstEnCours = false;
             }
         }
         if (indexDirections === 2) {
-            if (xGaucheTeteSerpent >= tailleDuCoteDuneCellule) {
-                xGaucheTeteSerpent -= tailleDuCoteDuneCellule;
+            if (xGaucheTeteSerpent > 0) {
+                xGaucheTeteSerpent -= 1;
             } else {
                 jeuEstEnCours = false;
             }
         }
         if (indexDirections === 3) {
-            if (yHautTeteSerpent >= tailleDuCoteDuneCellule) {
-                yHautTeteSerpent -= tailleDuCoteDuneCellule;
+            if (yHautTeteSerpent > 0) {
+                yHautTeteSerpent -= 1;
             } else {
                 jeuEstEnCours = false;
             }
         }
     }
-    console.log('xGaucheTeteSerpent: ' + xGaucheTeteSerpent / tailleDuCoteDuneCellule + ' yHautTeteSerpent: '
-        + yHautTeteSerpent / tailleDuCoteDuneCellule)
     const gCellulesTableauDuJeu = document.createElementNS("http://www.w3.org/2000/svg", "g");
     gCellulesTableauDuJeu.setAttribute("id", "cellules-tableau-du-jeu");
     gCellulesTableauDuJeu.setAttribute("fill", "white");
@@ -110,13 +108,13 @@ const intervalId = setInterval(() => {
     rect1Pomme.setAttribute("width", tailleDuCoteDuneCellule.toString());
     rect1Pomme.setAttribute("height", tailleDuCoteDuneCellule.toString());
     rect1Pomme.setAttribute("fill", "white");
-    rect1Pomme.setAttribute("x", xGauchePomme.toString());
-    rect1Pomme.setAttribute("y", yHautPomme.toString());
+    rect1Pomme.setAttribute("x", (xGauchePomme * tailleDuCoteDuneCellule).toString());
+    rect1Pomme.setAttribute("y", (yHautPomme * tailleDuCoteDuneCellule).toString());
     gPomme.appendChild(rect1Pomme);
 
     const circlePomme = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    circlePomme.setAttribute("cx", (xGauchePomme + (tailleDuCoteDuneCellule / 2)).toString());
-    circlePomme.setAttribute("cy", (yHautPomme + (tailleDuCoteDuneCellule / 2)).toString());
+    circlePomme.setAttribute("cx", ((xGauchePomme + 1/2) * tailleDuCoteDuneCellule).toString());
+    circlePomme.setAttribute("cy", ((yHautPomme + 1/2) * tailleDuCoteDuneCellule).toString());
     circlePomme.setAttribute("r", "12");
     circlePomme.setAttribute("fill", "red");
     gPomme.appendChild(circlePomme);
@@ -125,8 +123,8 @@ const intervalId = setInterval(() => {
     rect2Pomme.setAttribute("width", "2");
     rect2Pomme.setAttribute("height", "7");
     rect2Pomme.setAttribute("fill", "green");
-    rect2Pomme.setAttribute("x", (xGauchePomme + (tailleDuCoteDuneCellule / 2)).toString());
-    rect2Pomme.setAttribute("y", (yHautPomme + 1).toString());
+    rect2Pomme.setAttribute("x", ((xGauchePomme + 1/2) * tailleDuCoteDuneCellule).toString());
+    rect2Pomme.setAttribute("y", ((yHautPomme * tailleDuCoteDuneCellule) + 1).toString());
     //     <!-- Tige verte -->
     //     <rect x="15" y="4" width="2" height="7" fill="green"/>
     gPomme.appendChild(rect2Pomme);
@@ -155,8 +153,8 @@ const intervalId = setInterval(() => {
     const gCorpsDuSerpent = document.createElementNS("http://www.w3.org/2000/svg", "g");
     gCorpsDuSerpent.setAttribute("id", "corps-du-serpent");
     const rectCorpsDuSerpent = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    rectCorpsDuSerpent.setAttribute("x", (xGaucheTeteSerpent - tailleDuCoteDuneCellule).toString());
-    rectCorpsDuSerpent.setAttribute("y", yHautTeteSerpent);
+    rectCorpsDuSerpent.setAttribute("x", ((xGaucheTeteSerpent - 1) * tailleDuCoteDuneCellule).toString());
+    rectCorpsDuSerpent.setAttribute("y", (yHautTeteSerpent * tailleDuCoteDuneCellule).toString());
     rectCorpsDuSerpent.setAttribute("width", tailleDuCoteDuneCellule.toString());
     rectCorpsDuSerpent.setAttribute("height", tailleDuCoteDuneCellule.toString());
     rectCorpsDuSerpent.setAttribute("fill", "green");
@@ -168,23 +166,23 @@ const intervalId = setInterval(() => {
     svg.appendChild(gTeteDuSerpent);
 
     const rect1TeteDuSerpent = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    rect1TeteDuSerpent.setAttribute("x", xGaucheTeteSerpent.toString());
-    rect1TeteDuSerpent.setAttribute("y", yHautTeteSerpent);
+    rect1TeteDuSerpent.setAttribute("x", (xGaucheTeteSerpent* tailleDuCoteDuneCellule).toString());
+    rect1TeteDuSerpent.setAttribute("y", (yHautTeteSerpent * tailleDuCoteDuneCellule).toString());
     rect1TeteDuSerpent.setAttribute("width", tailleDuCoteDuneCellule.toString());
     rect1TeteDuSerpent.setAttribute("height", tailleDuCoteDuneCellule.toString());
     rect1TeteDuSerpent.setAttribute("fill", "white");
     gTeteDuSerpent.appendChild(rect1TeteDuSerpent);
 
     const circleTeteDuSerpent = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    circleTeteDuSerpent.setAttribute("cx", (xGaucheTeteSerpent + 8).toString());
-    circleTeteDuSerpent.setAttribute("cy", (yHautTeteSerpent + 16).toString());
-    circleTeteDuSerpent.setAttribute("r", "16");
+    circleTeteDuSerpent.setAttribute("cx", ((xGaucheTeteSerpent * tailleDuCoteDuneCellule) + 8).toString());
+    circleTeteDuSerpent.setAttribute("cy", ((yHautTeteSerpent + 1/2) * tailleDuCoteDuneCellule).toString());
+    circleTeteDuSerpent.setAttribute("r", (tailleDuCoteDuneCellule / 2).toString());
     circleTeteDuSerpent.setAttribute("fill", "green");
     gTeteDuSerpent.appendChild(circleTeteDuSerpent);
 
     const rect2TeteDuSerpent = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    rect2TeteDuSerpent.setAttribute("x", xGaucheTeteSerpent.toString());
-    rect2TeteDuSerpent.setAttribute("y", yHautTeteSerpent);
+    rect2TeteDuSerpent.setAttribute("x", (xGaucheTeteSerpent * tailleDuCoteDuneCellule).toString());
+    rect2TeteDuSerpent.setAttribute("y", (yHautTeteSerpent * tailleDuCoteDuneCellule).toString());
     rect2TeteDuSerpent.setAttribute("width", "8");
     rect2TeteDuSerpent.setAttribute("height", tailleDuCoteDuneCellule.toString());
     rect2TeteDuSerpent.setAttribute("fill", "green");
@@ -192,43 +190,47 @@ const intervalId = setInterval(() => {
 
     const oeilHautTeteDuSerpent = document.createElementNS("http://www.w3.org/2000/svg",
         "circle");
-    oeilHautTeteDuSerpent.setAttribute("cx", (xGaucheTeteSerpent + 8).toString());
-    oeilHautTeteDuSerpent.setAttribute("cy", (yHautTeteSerpent + 8).toString());
+    oeilHautTeteDuSerpent.setAttribute("cx", ((xGaucheTeteSerpent * tailleDuCoteDuneCellule) + 8).toString());
+    oeilHautTeteDuSerpent.setAttribute("cy", ((yHautTeteSerpent * tailleDuCoteDuneCellule) + 8).toString());
     oeilHautTeteDuSerpent.setAttribute("r", "3");
     oeilHautTeteDuSerpent.setAttribute("fill", "white");
     gTeteDuSerpent.appendChild(oeilHautTeteDuSerpent);
 
     const pupilleHautTeteDuSerpent = document.createElementNS("http://www.w3.org/2000/svg",
         "circle");
-    pupilleHautTeteDuSerpent.setAttribute("cx", (xGaucheTeteSerpent + 8).toString());
-    pupilleHautTeteDuSerpent.setAttribute("cy", (yHautTeteSerpent + 8).toString());
+    pupilleHautTeteDuSerpent.setAttribute("cx", ((xGaucheTeteSerpent * tailleDuCoteDuneCellule) + 8).toString());
+    pupilleHautTeteDuSerpent.setAttribute("cy", ((yHautTeteSerpent * tailleDuCoteDuneCellule) + 8).toString());
     pupilleHautTeteDuSerpent.setAttribute("r", "2");
     pupilleHautTeteDuSerpent.setAttribute("fill", "black");
     gTeteDuSerpent.appendChild(pupilleHautTeteDuSerpent);
 
     const oeilBasTeteDuSerpent = document.createElementNS("http://www.w3.org/2000/svg",
         "circle");
-    oeilBasTeteDuSerpent.setAttribute("cx", (xGaucheTeteSerpent + 8).toString());
-    oeilBasTeteDuSerpent.setAttribute("cy", (yHautTeteSerpent + 24).toString());
+    oeilBasTeteDuSerpent.setAttribute("cx", ((xGaucheTeteSerpent * tailleDuCoteDuneCellule) + 8).toString());
+    oeilBasTeteDuSerpent.setAttribute("cy", ((yHautTeteSerpent * tailleDuCoteDuneCellule) + 24).toString());
     oeilBasTeteDuSerpent.setAttribute("r", "3");
     oeilBasTeteDuSerpent.setAttribute("fill", "white");
     gTeteDuSerpent.appendChild(oeilBasTeteDuSerpent);
 
     const pupilleBasTeteDuSerpent = document.createElementNS("http://www.w3.org/2000/svg",
         "circle");
-    pupilleBasTeteDuSerpent.setAttribute("cx", (xGaucheTeteSerpent + 8).toString());
-    pupilleBasTeteDuSerpent.setAttribute("cy", (yHautTeteSerpent + 24).toString());
+    pupilleBasTeteDuSerpent.setAttribute("cx", ((xGaucheTeteSerpent * tailleDuCoteDuneCellule) + 8).toString());
+    pupilleBasTeteDuSerpent.setAttribute("cy", ((yHautTeteSerpent * tailleDuCoteDuneCellule) + 24).toString());
     pupilleBasTeteDuSerpent.setAttribute("r", "2");
     pupilleBasTeteDuSerpent.setAttribute("fill", "black");
     gTeteDuSerpent.appendChild(pupilleBasTeteDuSerpent);
 
     const langueDuSerpent = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    let texteDuDlangueDuSerpent = "M" + (xGaucheTeteSerpent + 31).toString() + " " +
-        (yHautTeteSerpent + 19).toString() + " L" + (xGaucheTeteSerpent + 29).toString() + " " +
-        (yHautTeteSerpent + 17).toString() + " L" + (xGaucheTeteSerpent + 31).toString() + " " +
-        (yHautTeteSerpent + 15).toString() + " M" + (xGaucheTeteSerpent + 29).toString() + " " +
-        (yHautTeteSerpent + 17).toString() + " L" + (xGaucheTeteSerpent + 19).toString() + " " +
-        (yHautTeteSerpent + 17).toString()
+    let texteDuDlangueDuSerpent = "M" + ((xGaucheTeteSerpent * tailleDuCoteDuneCellule) + 31).toString() + " " +
+        ((yHautTeteSerpent * tailleDuCoteDuneCellule) + 19).toString()
+        + " L" + ((xGaucheTeteSerpent * tailleDuCoteDuneCellule) + 29).toString() + " " +
+        ((yHautTeteSerpent * tailleDuCoteDuneCellule) + 17).toString()
+        + " L" + ((xGaucheTeteSerpent * tailleDuCoteDuneCellule) + 31).toString() + " " +
+        ((yHautTeteSerpent * tailleDuCoteDuneCellule) + 15).toString()
+        + " M" + ((xGaucheTeteSerpent * tailleDuCoteDuneCellule) + 29).toString() + " " +
+        ((yHautTeteSerpent * tailleDuCoteDuneCellule) + 17).toString()
+        + " L" + ((xGaucheTeteSerpent * tailleDuCoteDuneCellule) + 19).toString() + " " +
+        ((yHautTeteSerpent * tailleDuCoteDuneCellule) + 17).toString()
     langueDuSerpent.setAttribute("d", texteDuDlangueDuSerpent);
     langueDuSerpent.setAttribute("stroke", "red");
     langueDuSerpent.setAttribute("stroke-width", "1.5");
@@ -236,22 +238,26 @@ const intervalId = setInterval(() => {
     gTeteDuSerpent.appendChild(langueDuSerpent);
 
     if (indexDirections === 0) {
-        let transformation = "rotate(0, " + (xGaucheTeteSerpent + (tailleDuCoteDuneCellule / 2)) + ", " + (yHautTeteSerpent + 16).toString() + ")";
+        let transformation = "rotate(0, " + ((xGaucheTeteSerpent + 1/2) * tailleDuCoteDuneCellule) + ", " +
+            ((yHautTeteSerpent+ 1/2) * tailleDuCoteDuneCellule).toString() + ")";
         gCorpsDuSerpent.setAttribute("transform", transformation);
         gTeteDuSerpent.setAttribute("transform", transformation);
     }
     if (indexDirections === 1) {
-        let transformation = "rotate(90, " + (xGaucheTeteSerpent + (tailleDuCoteDuneCellule / 2)) + ", " + (yHautTeteSerpent + 16).toString() + ")";
+        let transformation = "rotate(90, " + ((xGaucheTeteSerpent + 1/2) * tailleDuCoteDuneCellule) + ", " +
+            ((yHautTeteSerpent+ 1/2) * tailleDuCoteDuneCellule).toString() + ")";
         gCorpsDuSerpent.setAttribute("transform", transformation);
         gTeteDuSerpent.setAttribute("transform", transformation);
     }
     if (indexDirections === 2) {
-        let transformation = "rotate(180, " + (xGaucheTeteSerpent + (tailleDuCoteDuneCellule / 2)) + ", " + (yHautTeteSerpent + 16).toString() + ")";
+        let transformation = "rotate(180, " + ((xGaucheTeteSerpent + 1/2) * tailleDuCoteDuneCellule) + ", " +
+            ((yHautTeteSerpent+ 1/2) * tailleDuCoteDuneCellule).toString() + ")";
         gCorpsDuSerpent.setAttribute("transform", transformation);
         gTeteDuSerpent.setAttribute("transform", transformation);
     }
     if (indexDirections === 3) {
-        let transformation = "rotate(270, " + (xGaucheTeteSerpent + (tailleDuCoteDuneCellule / 2)) + ", " + (yHautTeteSerpent + 16).toString() + ")";
+        let transformation = "rotate(270, " + ((xGaucheTeteSerpent + 1/2) * tailleDuCoteDuneCellule) + ", " +
+            ((yHautTeteSerpent+ 1/2) * tailleDuCoteDuneCellule).toString() + ")";
         gCorpsDuSerpent.setAttribute("transform", transformation);
         gTeteDuSerpent.setAttribute("transform", transformation);
     }
