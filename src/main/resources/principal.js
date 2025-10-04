@@ -1,55 +1,100 @@
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function wait(n) {
+    console.log("Start waiting...");
+    await sleep(n * 1000);  // Waits for 3 seconds
+    console.log("Waited 3 seconds!");
+}
+
 const tailleDuCoteDuneCellule = 32;
-const directions = ['E', 'S', 'O', 'N'];
-let indexDirections = 0;
-
-const svg = document.getElementById("tableau-du-jeu");
-document.addEventListener('keydown', (event) => {
-    if ('ArrowLeft' === event.key) {
-        console.log('Je tourne à gauche');
-        if (indexDirections > 0) {
-            indexDirections -= 1;
-        } else {
-            indexDirections = 3;
-        }
-    }
-    if ('ArrowRight' === event.key) {
-        console.log('Je tourne à droite');
-        if (indexDirections < 3) {
-            indexDirections += 1;
-        } else {
-            indexDirections = 0;
-        }
-    }
-});
-
+let jeuEstEnCours = false;
 let xGaucheTeteSerpent = tailleDuCoteDuneCellule;
 let yHautTeteSerpent = 0;
 let xGauchePomme = 128;
 let yHautPomme = 128;
 let pommeEstVisible = true;
 
-// TODO 1. faire réapparaître une nouvelle pomme quand la pomme actuelle est mangée
-// TODO 2. faire un tableau des positions des parties du serpent
-// TODO 3. faire grandir le serpent quand il mange une pomme
-// TODO 4. faire mourir le serpent quand il arrive sur un mur
-// TODO 5. faire un bouton pour relancer le jeu quand le serpent est mort
-// TODO 6. faire mourir le serpent quand il arrive sur lui-même
-// TODO 7. faire fonctionner le jeu sur téléphone (ne pas réagir aux touches mais aux gestes)
-// TODO 8. passer sur VITE VUE
-// TODO 9. faire que les contrôles passent sur 4 directions
+
+// Pour informations, c'est comme si on avait directions = ['Est', 'Sud', 'Ouest', 'Nord'];
+let indexDirections = 0;
+let nombreDeCasesDUnCote = 16;
+
+const svg = document.getElementById("tableau-du-jeu");
+document.addEventListener('keydown', (event) => {
+    if (jeuEstEnCours) {
+        if ('ArrowLeft' === event.key) {
+            console.log('Je tourne à gauche');
+            if (indexDirections > 0) {
+                indexDirections -= 1;
+            } else {
+                indexDirections = 3;
+            }
+        }
+        if ('ArrowRight' === event.key) {
+            console.log('Je tourne à droite');
+            if (indexDirections < 3) {
+                indexDirections += 1;
+            } else {
+                indexDirections = 0;
+            }
+        }
+    }
+    if ('m' === event.key) {
+        if (jeuEstEnCours) {
+            console.log('Le jeu est déjà en cours, pas de réinitialisation');
+        } else {
+            jeuEstEnCours = true;
+            xGaucheTeteSerpent = 0;
+            yHautTeteSerpent = 0;
+            xGauchePomme = 128;
+            yHautPomme = 128;
+            pommeEstVisible = true;
+            indexDirections = 0;
+        }
+    }
+});
+
+// TODO 1. faire un tableau des positions des parties du serpent
+// TODO 2. faire grandir le serpent quand il mange une pomme
+// TODO 3. faire réapparaître une nouvelle 0pomme quand la pomme actuelle est mangée
+// TODO 4. faire un bouton pour relancer le jeu quand le serpent est mort
+// TODO 5. faire mourir le serpent quand il arrive sur lui-même
+// TODO 6. faire fonctionner le jeu sur téléphone (ne pas réagir aux touches mais aux gestes)
+// TODO 7. passer sur VITE VUE
+// TODO 8. faire que les contrôles passent sur 4 directions
 
 const intervalId = setInterval(() => {
-    if (indexDirections === 0) {
-        xGaucheTeteSerpent += tailleDuCoteDuneCellule;
-    }
-    if (indexDirections === 1) {
-        yHautTeteSerpent += tailleDuCoteDuneCellule;
-    }
-    if (indexDirections === 2) {
-        xGaucheTeteSerpent -= tailleDuCoteDuneCellule;
-    }
-    if (indexDirections === 3) {
-        yHautTeteSerpent -= tailleDuCoteDuneCellule;
+    if (jeuEstEnCours) {
+        if (indexDirections === 0) {
+            if (xGaucheTeteSerpent < tailleDuCoteDuneCellule * (nombreDeCasesDUnCote-1)) {
+                xGaucheTeteSerpent += tailleDuCoteDuneCellule;
+            } else {
+                jeuEstEnCours = false;
+            }
+        }
+        if (indexDirections === 1) {
+            if (yHautTeteSerpent < tailleDuCoteDuneCellule * (nombreDeCasesDUnCote-1)) {
+                yHautTeteSerpent += tailleDuCoteDuneCellule;
+            } else {
+                jeuEstEnCours = false;
+            }
+        }
+        if (indexDirections === 2) {
+            if (xGaucheTeteSerpent >= tailleDuCoteDuneCellule) {
+                xGaucheTeteSerpent -= tailleDuCoteDuneCellule;
+            } else {
+                jeuEstEnCours = false;
+            }
+        }
+        if (indexDirections === 3) {
+            if (yHautTeteSerpent >= tailleDuCoteDuneCellule) {
+                yHautTeteSerpent -= tailleDuCoteDuneCellule;
+            } else {
+                jeuEstEnCours = false;
+            }
+        }
     }
     console.log('xGaucheTeteSerpent: ' + xGaucheTeteSerpent / tailleDuCoteDuneCellule + ' yHautTeteSerpent: '
         + yHautTeteSerpent / tailleDuCoteDuneCellule)
@@ -70,8 +115,8 @@ const intervalId = setInterval(() => {
     gPomme.appendChild(rect1Pomme);
 
     const circlePomme = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    circlePomme.setAttribute("cx", (xGauchePomme + (tailleDuCoteDuneCellule/2)).toString());
-    circlePomme.setAttribute("cy", (yHautPomme + (tailleDuCoteDuneCellule/2)).toString());
+    circlePomme.setAttribute("cx", (xGauchePomme + (tailleDuCoteDuneCellule / 2)).toString());
+    circlePomme.setAttribute("cy", (yHautPomme + (tailleDuCoteDuneCellule / 2)).toString());
     circlePomme.setAttribute("r", "12");
     circlePomme.setAttribute("fill", "red");
     gPomme.appendChild(circlePomme);
@@ -80,7 +125,7 @@ const intervalId = setInterval(() => {
     rect2Pomme.setAttribute("width", "2");
     rect2Pomme.setAttribute("height", "7");
     rect2Pomme.setAttribute("fill", "green");
-    rect2Pomme.setAttribute("x", (xGauchePomme +  (tailleDuCoteDuneCellule/2)).toString());
+    rect2Pomme.setAttribute("x", (xGauchePomme + (tailleDuCoteDuneCellule / 2)).toString());
     rect2Pomme.setAttribute("y", (yHautPomme + 1).toString());
     //     <!-- Tige verte -->
     //     <rect x="15" y="4" width="2" height="7" fill="green"/>
@@ -94,9 +139,8 @@ const intervalId = setInterval(() => {
     if ((xGauchePomme === xGaucheTeteSerpent) && (yHautPomme === yHautTeteSerpent)) {
         pommeEstVisible = false;
     }
-
-    for (let ligneActuelle = 0; ligneActuelle < 16; ligneActuelle++) {
-        for (let colonneActuelle = 0; colonneActuelle < 16; colonneActuelle++) {
+    for (let ligneActuelle = 0; ligneActuelle < nombreDeCasesDUnCote; ligneActuelle++) {
+        for (let colonneActuelle = 0; colonneActuelle < nombreDeCasesDUnCote; colonneActuelle++) {
             let x = tailleDuCoteDuneCellule * ligneActuelle;
             let y = tailleDuCoteDuneCellule * colonneActuelle;
             const rectCellule = document.createElementNS("http://www.w3.org/2000/svg", "rect");
@@ -215,3 +259,4 @@ const intervalId = setInterval(() => {
 setTimeout(() => {
     clearInterval(intervalId);
 }, 999999);
+
